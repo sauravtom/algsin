@@ -5,11 +5,11 @@
 
 
 {% block content %}
-
-    {% for i in p_arr %}
+    {{p}}
+    {% for i in arr %}
     	{% if loop.index >= (n-1)*10 and loop.index <= n*10 %}
     		<li>
-    			<a href="i/{{i[1]}}">
+    			<a href="?i={{i[2]}}" target="_blank">
     				
     				{{loop.index}}: {{i[0]}} 
     			
