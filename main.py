@@ -70,8 +70,6 @@ class MainHandler(webapp2.RequestHandler):
             template = jinja_environment.get_template('templates/index.html')
             self.response.out.write(template.render(arr=arr,n=n))
         else:
-            #fake_url = self.request.url
-            #bcode = fake_url.split('/')[-1]
             bitly_url = "http://bit.ly/" + i
 
             fp = urllib2.urlopen(bitly_url)
@@ -112,8 +110,7 @@ class Update_DB(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/db',Update_DB),
-    ('/i/',Image_page)
+    ('/db',Update_DB)
 ], debug=True)
 
 
