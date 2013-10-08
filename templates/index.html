@@ -1,0 +1,24 @@
+{% extends "templates/base.html" %}
+
+
+{% block title %}Index{% endblock %}
+
+
+{% block content %}
+
+    {% for i in p_arr %}
+    	{% if loop.index >= (n-1)*10 and loop.index <= n*10 %}
+    		<li>
+    			<a href="i/{{i[1]}}">
+    				
+    				{{loop.index}}: {{i[0]}} 
+    			
+    			</a>
+    		</li>
+    		<hr>
+    	{% endif %}
+    {% endfor %}
+
+    <a href='/?page={{n+1}}'>More</a>
+
+{% endblock %}
