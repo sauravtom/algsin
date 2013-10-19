@@ -1,4 +1,4 @@
 cron:
 - description: cron update database
   url: /db
-  schedule: every 12 hours
+  schedule: every 2 hours

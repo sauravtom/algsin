@@ -5,20 +5,79 @@
 
 
 {% block content %}
-    {{p}}
     {% for i in arr %}
+
+    <!-- NOTES:
+              {{i[0]}} = title
+              {{i[1]}} = real image/video url (http://imgur.com/7gfT5.jpg)
+              {{i[2]}} = fake bitly url (9gTr3)
+              {{i[3]}} = category (meme.ecards)
+              {{i[4]}} = [VIDEO ONLY] video id (HAhRTeOwhLo)
+              {{i[5]}} = [VIDEO ONLY] video type (yt,vm)
+     -->
+
     	{% if loop.index >= (n-1)*10 and loop.index <= n*10 %}
-    		<li>
-    			<a href="?i={{i[2]}}" target="_blank">
-    				
-    				{{loop.index}}: {{i[0]}} 
-    			
-    			</a>
+
+        <li>
+            {% if type == "pic" %}
+        			<a class="image_item" href="/{{i[2]}}" target="_blank">
+        				<p>{{i[0]}}</p> 
+                <img class="img-rounded lazy" src='{{i[1]}}'>
+              </a>      
+            {% endif %}
+
+            {% if type == "vid" %}
+              <a class="video_item" href="/{{i[2]}}" target="_blank">
+                <p>{{i[0]}}</p>
+                {% if i[5] == "yt" %} 
+                    <iframe type="text/html" width="640" height="390"
+                      src="http://www.youtube.com/embed/{{i[4]}}"
+                      frameborder="0">
+                    </iframe>
+                {% endif %}
+                {% if i[5] == "vm" %} 
+                    <iframe src="http://player.vimeo.com/video/{{i[4]}}" width="640" height="390" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>
+                    </iframe>
+                {% endif %}    
+              </a>      
+            {% endif %}
+
+                <!-- Make a javascript file which returns all this text instead of writing it all in -->
+                <div class='social'>    
+                    <button class="btn btn-success"
+                      onclick="
+                        window.open(
+                          'https://twitter.com/intent/tweet?source=webclient&text={{i[0]}} @algs_in algs.in/{{i[2]}}',
+                          'Tweet',
+                          'width=626,height=436'); 
+                        return false;">Twitter
+                    </button>
+
+
+                    <button href="#" class="btn btn-success"
+                      onclick="
+                        window.open(
+                          'https://www.facebook.com/sharer/sharer.php?u=algs.in/{{i[2]}}', 
+                          'facebook-share-dialog', 
+                          'width=626,height=436'); 
+                        return false;">Facebook
+                    </button>
+
+                    <button href="#" class="btn btn-success"
+                      onclick="
+                        window.open(
+                          'https://plus.google.com/share?url=algs.in/{{i[2]}}',
+                          'Google Plus Share', 
+                          'width=626,height=436');
+                        return false;">Google+
+                    </button>
+                </div>
     		</li>
     		<hr>
     	{% endif %}
     {% endfor %}
 
-    <a href='/?page={{n+1}}'>More</a>
+    <a href='/{{npu}}' class="btn btn-danger btn-lg" >Moarrr ...</a>
+
 
 {% endblock %}
