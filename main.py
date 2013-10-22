@@ -11,8 +11,8 @@ import logging
 import jinja2
 import os
 
-import bitly
-from local_settings import BitlyKey
+#import bitly
+#from local_settings import BitlyKey
 
 #import sys
 #from google.appengine.api import urlfetch
@@ -44,20 +44,19 @@ class MainHandler(webapp2.RequestHandler):
 
         page_url=page_url_.split('.')
 
+        #image(item) page
         if page_url_.find('.') == -1 and len(page_url_) in [6,7]:
-            #image(item) page
-
             i=page_url[0]
-            bitly_url = "http://bit.ly/" + i
+            bitly_url = "http://goo.gl/" + i
 
             fp = urllib2.urlopen(bitly_url)
             url=fp.geturl()
 
-            k = url.rfind(";")
+            k = url.rfind("?title=")
             #title = url.split('/')[-1]  #does not work for videos
             #url = url.split(';')[0]
             #url = "/".join(url.split('/')[:-1])
-            title = url[k+1:]
+            title = url[k+7:]
             title = urllib2.unquote(title)
             murl=url
             url = url[:k]
@@ -78,8 +77,8 @@ class MainHandler(webapp2.RequestHandler):
             template = jinja_environment.get_template('templates/image.html')
             self.response.out.write(template.render(url=url,title=title,type=type,type2=type2,uid=uid,murl=murl))
         
+        #posts page
         if len(page_url) == 3:
-            #posts page
             page_no = int(page_url[0]) + 1
             cat = page_url[1]   #meme,video,eyecandy
             sub_cat = page_url[2] #rage,documentaries
@@ -179,6 +178,12 @@ Add gif support
 Implement lazy loading
 
 Add news page
+
+learn how to raise exceptions
+
+learn python code profiling
+
+meme.other and meme.wtf thingy
 
 '''
 
